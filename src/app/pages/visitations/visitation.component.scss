@@ -1,0 +1,51 @@
+.star {
+    font-size: 1.5rem;
+    color: #b0c4de;
+}
+.filled {
+    color: #1e90ff;
+}
+.bad {
+    color: #deb0b0;
+}
+.filled.bad {
+    color: red;
+}
+.filled.regular {
+    color: green;
+}
+
+////
+.no-border {
+    border: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
+
+///@at-root
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+
+.imgThumbnail{
+  padding: 4px;
+}
+#seleccionarImagen {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 6px;
+  padding-left: 6px;
+  font-family: serif;
+  font-size: 17px;
+}
+
+#botonesTabla {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.registro{
+  background-color: #E9EAEE;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}

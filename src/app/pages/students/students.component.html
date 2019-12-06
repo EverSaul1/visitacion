@@ -1,0 +1,109 @@
+<div>
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="card-body">
+            <input #buscarEstudiante     type="text" class="form-control" placeholder="Buscar visitaciones">
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+                <div class="card-body">
+                    <div class="text-right">
+                        <button type="button" class="btn waves-effect waves-light btn-rounded btn-success mr-md-2">
+                            <i class="fas fa-file-export"></i>
+                            Exportar excel
+                        </button>
+                    </div>
+                    <div class="card-title ">
+                        <h5>Visitas realizadas <small>{{collectionSize}}</small></h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nº</th>
+                                    <th scope="col">Estudiante</th>
+                                    <th scope="col">Dni</th>
+                                    <th scope="col">Celular</th>
+                                    <th scope="col">Accciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let estudiante of estudiantes; let indice=index">
+                                    <th scope="row">{{indice + 1}}</th>
+                                    <td>{{estudiante.name}}</td>
+                                    <td>{{estudiante.dni}}</td>
+                                    <td>{{estudiante.cell_phone}}</td>
+                                    <td>
+                                        <a  (click)="openXl(content); estudianteDetalle = estudiante" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Ver más">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSize" [pageSize]="itemsPerPage" [(page)]="currentPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange(currentPage)">
+                            </ngb-pagination>
+
+                            <select class="custom-select" style="width: auto" [(ngModel)]="itemsPerPage" (click)="loadData()" *ngIf="collectionSize > 4">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="25">25</option>
+                                <option [ngValue]="100">100</option>
+                                <option [ngValue]="collectionSize">Todo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Datos del Estudiante {{ estudianteDetalle.name }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Nombre Completo: {{estudianteDetalle.name}}</p>
+        
+        <p>DNI: {{estudianteDetalle.dni}}</p>
+
+        <p>Numero Celular: {{estudianteDetalle.cell_phone}}</p>
+
+        <p>Correo Electronico: {{estudianteDetalle.email}}</p>
+
+        <p>Escuela Academica Profesional: {{estudianteDetalle.school.name}}</p>
+
+        <p>Ciclo: {{estudianteDetalle.ciclo.name}}</p>
+
+        <p>Grupo: {{estudianteDetalle.group.name}}</p>
+
+        <p>Religion: {{estudianteDetalle.filiacion_religoso}}</p>
+        
+        <p>Direccion: {{estudianteDetalle.address}}</p>
+        <div class="form-row mb-3">
+            <div class="col-md-12">
+                    <agm-map [latitude]="estudianteDetalle.lat" [longitude]="estudianteDetalle.long">
+                            <agm-marker 
+                            [latitude]='estudianteDetalle.lat'
+                            [longitude]='estudianteDetalle.long'>
+                            <agm-info-window>
+                                <p>Direccion: {{ estudianteDetalle.address }}</p>
+                            </agm-info-window>
+                        </agm-marker> 
+                    </agm-map>
+                    
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Close click')">Cerrar</button>
+    </div>
+</ng-template>
+  

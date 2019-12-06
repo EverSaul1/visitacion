@@ -1,0 +1,53 @@
+<div class="card mb-3" style="max-width: 100%;">
+    <div class="card-body">
+        <input #buscarUsuario type="text" class="form-control" placeholder="Buscar Ciclo...">
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card border-0 rounded-0">
+            <div class="card-body">
+                <div class="text-right">
+                    <button [routerLink]="['/ciclo/nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                  <i class="fa fa-plus"></i>
+                  Crear Ciclo
+              </button>
+                </div>
+                <div class="card-title ">
+                    <h5>Ciclos Academicas Registrados <span class="badge badge-pill badge-primary">{{collectionSize}}</span></h5>
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table table-hover" id="mytable">
+                        <thead>
+                            <tr>
+                                <th scope="col">N°</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Numero</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let ciclo of ciclos; let indice=index">
+                                <th scope="row">{{indice + 1}}</th>
+                                <td>{{ciclo.name}}</td>
+                                <td>{{ciclo.numero}}</td>
+                                <td>
+                                    <a [routerLink]="['/ciclo/', ciclo._id ]" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a (click)="deleteCiclo( ciclo )" class="btn btn-sm btn-danger" placement="top" ngbTooltip="Eliminar">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination [collectionSize]="collectionSize" [pageSize]="itemsPerPage" [(page)]="currentPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange(currentPage)">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-12 mb-4 ">
+
+        <div class="card border-0 rounded-0">
+            <div class="card-title mb-1 p-3">
+                <h5>Programar visitas</h5>
+            </div>
+            <div class="card-body">
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="programarVisita()">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Alumno</label>
+                            <!-- <input  type="text" class="form-control" placeholder="Buscar alumno" formControlName="student" name="student"> -->
+                            <input type="text" name="student" class="form-control" placeholder="Buscar alumno" formControlName="student" [ngbTypeahead]="buscarEstudiante" required [resultFormatter]="formatEstudiante" [inputFormatter]="formatEstudiante" [editable]='false' [ngClass]="{'is-invalid': !forma.get('student').valid  && forma.controls['student'].touched}"/>
+                            <div class="invalid-feedback d-block" *ngIf="noencontradoEstudiante">No se encontraron resultados</div>
+                            <div *ngIf="forma.controls['student'].errors?.required && forma.controls['student'].touched" class="invalid-feedback text-danger d-block">
+                                Estudiante es requerido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="yyyy-mm-dd" formControlName="programed" name="programed" ngbDatepicker #d="ngbDatepicker" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button *ngIf="!cargando" type="submit" class="btn btn-primary">Guardar</button>
+                    <button *ngIf="cargando" [disabled]="true" class="btn btn-primary">
+                    <i class="fa fa-spin fa-sync"></i>
+                    Espere...
+                    </button>
+                    <button type="button" [routerLink]="['/programarvisitas']" class="btn btn-light">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

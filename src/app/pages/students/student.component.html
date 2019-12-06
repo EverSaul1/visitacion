@@ -1,0 +1,235 @@
+<div class="col d-flex justify-content-center" *ngIf="cargando">
+    <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 mb-4 ">
+        <div class="card border-0 rounded-0">
+            <div class="card-title mb-1 p-3">
+                <h5>Registrar mis datos</h5>
+            </div>
+            <div class="card-body">
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarEstudiante()">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Apellidos y nombres</label>
+                            <input formControlName="name" name="name" type="text" class="form-control" placeholder="Nombres" [ngClass]="{'is-invalid': !forma.get('name').valid  && forma.controls['name'].touched}">
+                            <div *ngIf="forma.controls['name'].errors?.required && forma.controls['name'].touched" class="form-control-feedback text-danger">
+                                El nombre es necesario
+                            </div>
+                            <div *ngIf="forma.controls['name'].errors?.minlength" class="form-control-feedback  text-danger">
+                                Por lo menos {{ forma.controls['name'].errors?.minlength.requiredLength }} caracteres
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Dni</label>
+                            <input formControlName="dni" name="dni" type="text" class="form-control" placeholder="Dni" [ngClass]="{'is-invalid': !forma.get('dni').valid  && forma.controls['dni'].touched}">
+                            <div *ngIf="forma.controls['dni'].errors?.required && forma.controls['dni'].touched" class="form-control-feedback text-danger">
+                                Dni es necesario
+                            </div>
+                            <div *ngIf="forma.controls['dni'].errors?.minlength" class="form-control-feedback  text-danger">
+                                Por lo menos {{ forma.controls['dni'].errors?.minlength.requiredLength }} caracteres
+                            </div>
+                            <div *ngIf="forma.controls['dni'].errors?.pattern" class="form-control-feedback text-danger">
+                                El formato de este número de identidad no se reconoce. Compruebe el numero.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Escuela profesional</label>
+                            <select formControlName="school" name="school" class="form-control" [ngClass]="{'is-invalid': !forma.get('school').valid  && forma.controls['school'].touched}">
+                            <option *ngFor="let escuela of escuelas" [value]="escuela._id" >{{escuela.name}}</option>
+                        </select>
+                            <div *ngIf="forma.controls['school'].errors?.required && forma.controls['school'].touched" class="form-control-feedback text-danger">
+                                Escuela profesional es necesario
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Ciclo</label>
+                            <select formControlName="ciclo" name="ciclo" class="form-control" [ngClass]="{'is-invalid': !forma.get('ciclo').valid  && forma.controls['ciclo'].touched}">
+                            <option *ngFor="let ciclo of ciclos" [value]="ciclo._id">{{ciclo.name}}</option>
+                        </select>
+                            <div *ngIf="forma.controls['ciclo'].errors?.required && forma.controls['ciclo'].touched" class="form-control-feedback text-danger">
+                                Escuela profesional es necesario
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Grupo</label>
+                            <select formControlName="group" name="group" class="form-control" [ngClass]="{'is-invalid': !forma.get('group').valid  && forma.controls['group'].touched}">
+                            <option *ngFor="let grupo of grupos" [value]="grupo._id">{{grupo.numero}}</option>
+                        </select>
+                            <div *ngIf="forma.controls['group'].errors?.required && forma.controls['group'].touched" class="form-control-feedback text-danger">
+                                Grupo es necesario
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>N* Celular</label>
+                            <input formControlName="cell_phone" name="cell_phone" type="text" class="form-control" placeholder="Celular" [ngClass]="{'is-invalid': !forma.get('cell_phone').valid  && forma.controls['cell_phone'].touched}">
+                            <div *ngIf="forma.controls['cell_phone'].errors?.required && forma.controls['cell_phone'].touched" class="form-control-feedback text-danger">
+                                Celular es necesario
+                            </div>
+                            <div *ngIf="forma.controls['cell_phone'].errors?.minlength" class="form-control-feedback  text-danger">
+                                Por lo menos {{ forma.controls['cell_phone'].errors?.minlength.requiredLength }} caracteres
+                            </div>
+                            <div *ngIf="forma.controls['cell_phone'].errors?.pattern" class="form-control-feedback text-danger">
+                                El formato de este número de celular no se reconoce. Compruebe el numero.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Email</label>
+                            <input formControlName="email" name="email" type="email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid': !forma.get('email').valid  && forma.controls['email'].touched}">
+                            <div *ngIf="forma.controls['email'].errors?.required && forma.controls['email'].touched" class="form-control-feedback text-danger">
+                                El email es necesario
+                            </div>
+                            <div *ngIf="forma.controls['email'].errors?.pattern" class="form-control-feedback text-danger">
+                                Usa el formator nombre@upeu.edu.pe
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Lugar de procedencia</label>
+                            <input formControlName="origin" name="origin" type="text" class="form-control" placeholder="Lugar de procedencia" [ngClass]="{'is-invalid': !forma.get('origin').valid  && forma.controls['origin'].touched}">
+                            <div *ngIf="forma.controls['origin'].errors?.required && forma.controls['origin'].touched" class="form-control-feedback text-danger">
+                                Lugar de procedencia es necesario
+                            </div>
+                            <div *ngIf="forma.controls['origin'].errors?.minlength" class="form-control-feedback  text-danger">
+                                Por lo menos {{ forma.controls['origin'].errors?.minlength.requiredLength }} caracteres
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Filiación religiosa</label>
+                            <select formControlName="filiacion_religoso" name="filiacion_religoso" class="form-control" [ngClass]="{'is-invalid': !forma.get('filiacion_religoso').valid  && forma.controls['filiacion_religoso'].touched}">
+                            <option value="adventista">Adventista</option>
+                            <option value="católico">Católico</option>
+                            <option value="catolico">Otro</option>
+                        </select>
+                            <div *ngIf="forma.controls['filiacion_religoso'].errors?.required && forma.controls['filiacion_religoso'].touched" class="form-control-feedback text-danger">
+                                Filiación religiosa es necesario
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Iglesia donde asiste</label>
+                            <input formControlName="church" name="church" type="text" class="form-control" placeholder="Iglesia" [ngbTypeahead]="search" [editable]='true' (focus)="focus$.next($event.target.value)" (click)="click$.next($event.target.value)" #instance="ngbTypeahead">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Clase de Escuela Sabática</label>
+                            <input formControlName="sabbatical_school" name="sabbatical_school" type="text" class="form-control" placeholder="Escuela sabática">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" formControlName="baptized" name="baptized" [value]="false">
+                                <label class="form-check-label">Bautizado</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Dirección completa</label>
+                            <input formControlName="address" name="address" type="text" class="form-control" placeholder="Dirección" [ngClass]="{'is-invalid': !forma.get('address').valid  && forma.controls['address'].touched}">
+                            <div *ngIf="forma.controls['address'].errors?.required && forma.controls['address'].touched" class="form-control-feedback text-danger">
+                                Dirección es necesario
+                            </div>
+                            <div *ngIf="forma.controls['address'].errors?.minlength" class="form-control-feedback  text-danger">
+                                Por lo menos {{ forma.controls['address'].errors?.minlength.requiredLength }} caracteres
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Ingrese dirección</label>
+                                <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Buscar ubicación más cercana" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #buscar>
+                            </div>
+
+                            <agm-map (mapClick)="agregarMarcador( $event )" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [scrollwheel]="false" [fullscreenControl]='true' [mapTypeControl]='true'>
+                                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd($event)"></agm-marker>
+                            </agm-map>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>Responsable economico</label>
+                            <div class="input-group mb-1 mr-sm-1">
+                                <!-- <div class="input-group-append">
+                                <span class="input-group-text" style="background: rebeccapurple;color: white;"><i class="fas fa-plus"></i></span>
+                            </div> -->
+                                <input type="text" name="economic_responsible" class="form-control" placeholder="Responsable ecónomico" formControlName="economic_responsible" [ngbTypeahead]="buscarResponsable" [resultFormatter]="formatResponsable" [inputFormatter]="formatResponsable"
+                                    [editable]='false' [ngClass]="{'is-invalid': !forma.get('economic_responsible').valid  && forma.controls['economic_responsible'].touched}" />
+                                <div class="input-group-append" *ngIf="noencontradoResponsable" (click)="openVerticallyCentered(content)">
+                                    <span class="input-group-text" style="background: rebeccapurple;color: white;"><i class="fas fa-plus"></i></span>
+                                </div>
+                                <!-- <div class="valid-feedback d-block">Please enter an amount to proceed</div> -->
+                                <div *ngIf="forma.controls['economic_responsible'].errors?.required && forma.controls['economic_responsible'].touched && !noencontradoResponsable" class="invalid-feedback text-danger d-block">
+                                    Responsable economico es necesario
+                                </div>
+                                <div class="invalid-feedback d-block" *ngIf="noencontradoResponsable">No se encontraron resultados</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Apoderado</label>
+                            <div class="input-group mb-1 mr-sm-1">
+                                <!-- <div class="input-group-append">
+                                <span class="input-group-text" style="background: rebeccapurple;color: white;"><i class="fas fa-plus"></i></span>
+                            </div> -->
+                                <input type="text" name="father_apo" class="form-control" placeholder="Responsable ecónomico" formControlName="father_apo" [ngbTypeahead]="buscarApoderado" [resultFormatter]="formatApoderado" [inputFormatter]="formatApoderado" [editable]='false' [ngClass]="{'is-invalid': !forma.get('father_apo').valid  && forma.controls['father_apo'].touched}"
+                                />
+                                <div class="input-group-append" *ngIf="noencontradoApoderado" (click)="openVerticallyCentered(content)">
+                                    <span class="input-group-text" style="background: rebeccapurple;color: white;"><i class="fas fa-plus"></i></span>
+                                </div>
+                                <!-- <div class="valid-feedback d-block">Please enter an amount to proceed</div> -->
+                                <div *ngIf="forma.controls['father_apo'].errors?.required && forma.controls['father_apo'].touched && !noencontradoApoderado" class="invalid-feedback text-danger d-block">
+                                    Apoderado es necesario
+                                </div>
+                                <div class="invalid-feedback d-block" *ngIf="noencontradoApoderado">No se encontraron resultados</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="forma.invalid">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Dato</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form ngNativeValidate [formGroup]="formaApoderado" (ngSubmit)="registrarApoderado()">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Apellidos y nombres</label>
+                <input formControlName="name" name="name" type="text" class="form-control" placeholder="Introduzca nombre" [ngClass]="{'is-invalid': !formaApoderado.get('name').valid  && formaApoderado.controls['name'].touched}">
+                <div *ngIf="formaApoderado.controls['name'].errors?.required && formaApoderado.controls['name'].touched" class="form-control-feedback text-danger">
+                    El nombre es necesario
+                </div>
+                <div *ngIf="formaApoderado.controls['name'].errors?.minlength" class="form-control-feedback  text-danger">
+                    Por lo menos {{ formaApoderado.controls['name'].errors?.minlength.requiredLength }} caracteres
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Celular</label>
+                <input formControlName="cell_phone" name="cell_phone" type="text" class="form-control" placeholder="Introduzca numero celular" [ngClass]="{'is-invalid': !formaApoderado.get('cell_phone').valid  && formaApoderado.controls['cell_phone'].touched}">
+                <div *ngIf="formaApoderado.controls['cell_phone'].errors?.required && formaApoderado.controls['cell_phone'].touched" class="form-control-feedback text-danger">
+                    Celular es necesario
+                </div>
+                <div *ngIf="formaApoderado.controls['cell_phone'].errors?.minlength" class="form-control-feedback  text-danger">
+                    Por lo menos {{ formaApoderado.controls['cell_phone'].errors?.minlength.requiredLength }} caracteres
+                </div>
+                <div *ngIf="formaApoderado.controls['cell_phone'].errors?.pattern" class="form-control-feedback text-danger">
+                    El formato de este número de celular no se reconoce. Compruebe el numero.
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="formaApoderado.invalid">Guardar</button>
+        </form>
+    </div>
+</ng-template>

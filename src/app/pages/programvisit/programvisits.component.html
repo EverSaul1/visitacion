@@ -1,0 +1,97 @@
+<div>
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="card-body">
+            <input #buscarProgramarvisita type="text" class="form-control" placeholder="Buscar usuario">
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+                <div class="card-body">
+                    <div class="text-right">
+                        <button [routerLink]="['/programarvisita/nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                            <i class="fa fa-plus"></i>
+                            Programar visita
+                        </button>
+                    </div>
+                    <div class="card-title">
+                        <h5>Visitas programadas <small>{{collectionSize}}</small></h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nombres</th>
+                                    <th scope="col">Dni</th>
+                                    <th scope="col">Celular</th>
+                                    <th scope="col">Dirección</th>
+                                    <th scope="col">Fecha a vistar</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let visitprogramada of visitasprogramadas; let indice=index">
+                                    <th scope="row">{{indice + 1}}</th>
+                                    <td>{{visitprogramada.student.name}}</td>
+                                    <td>{{visitprogramada.student.dni}}</td>
+                                    <td>{{visitprogramada.student.cell_phone}}</td>
+                                    <td>{{visitprogramada.student.address}}</td>
+                                    <td>{{visitprogramada.programed.day}}-{{visitprogramada.programed.month}}-{{visitprogramada.programed.year}}</td>
+                                    <td>
+                                        <a (click)="openXl(content, visitprogramadaDetalle = visitprogramada)" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Ver más">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a (click)="borrarProgramvisit( visitprogramada )"  class="btn btn-sm btn-success" placement="top" ngbTooltip="Visitado">
+                                            <i class="fas fa-check-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSize" [pageSize]="itemsPerPage" [(page)]="currentPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange(currentPage)">
+                            </ngb-pagination>
+
+                            <select class="custom-select" style="width: auto" [(ngModel)]="itemsPerPage" (click)="loadData()">
+                              <option [ngValue]="5">5</option>
+                              <option [ngValue]="10">10</option>
+                              <option [ngValue]="25">25</option>
+                              <option [ngValue]="100">100</option>
+                              <option [ngValue]="collectionSize">Todo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Datos del Estudiante: <span class="text-uppercase">{{visitprogramadaDetalle.student.name}}</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-row mb-3">
+            <div class="col-md-12">
+                    <agm-map [latitude]="visitprogramadaDetalle.student.latitude" [longitude]="visitprogramadaDetalle.student.longitude" [scrollwheel]="false" [fullscreenControl]='true' [mapTypeControl]='true'>
+                            <agm-marker 
+                            [latitude]='visitprogramadaDetalle.student.latitude'
+                            [longitude]='visitprogramadaDetalle.student.longitude'>
+                            <agm-info-window>
+                                <p>Direccion: {{ visitprogramadaDetalle.student.address }}</p>
+                            </agm-info-window>
+                        </agm-marker> 
+                    </agm-map>
+                    
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Close click')">Cerrar</button>
+    </div>
+</ng-template>

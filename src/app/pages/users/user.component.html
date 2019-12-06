@@ -1,0 +1,63 @@
+<div>
+    <h4 class="mb-4 text-muted">Formulario de Usuario</h4>
+    <p>Introduzca la informacion solicitada y haga clic en Crear usuario para crear nuevo usuario</p>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-title mb-1 p-3">
+                <h5>Nuevo Usuario</h5>
+                </div>
+                <div class="card-body">
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarUsuario()">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nombre de usuario</label>
+                        <input formControlName="username" name="username" class="form-control rounded-0" placeholder="Introduzca el nombre de usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Contraseña</label>
+                        <input formControlName="password" name="password" type="password" class="form-control rounded-0" placeholder="Contraseña" [ngClass]="{'is-invalid': !forma.get('password').valid  && forma.controls['password'].touched}">
+                        <div *ngIf="forma.controls['password'].errors?.required && forma.controls['password'].touched" class="form-control-feedback text-danger">
+                            El contraseña es necesario
+                        </div>
+                        <div *ngIf="forma.controls['password'].errors?.minlength" class="form-control-feedback text-danger">
+                            Por lo menos {{ forma.controls['password'].errors?.minlength.requiredLength }} caracteres
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Confirmar contraseña</label>
+                        <input formControlName="password2" name="password2" type="password" class="form-control rounded-0" placeholder="Confirmar contraseña">
+                        <div *ngIf="forma.errors?.sonIguales && !forma.pristine" class="form-control-feedback text-danger">
+                            Las contraseñas deben de se iguales
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input formControlName="email" name="email" class="form-control rounded-0" placeholder="Introduzca el correo"  [ngClass]="{'is-invalid': !forma.get('email').valid  && forma.controls['email'].touched}">
+                        <div *ngIf="forma.controls['email'].errors?.required && forma.controls['email'].touched" class="form-control-feedback text-danger" >
+                            El email es necesario
+                        </div>
+                        <div *ngIf="forma.controls['email'].errors?.pattern" class="form-control-feedback text-danger" >
+                            Usa el formato nombre@gmail.com
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nombres</label>
+                        <input formControlName="name" name="name" class="form-control rounded-0" placeholder="Introduzca su nombre completo">
+
+                    </div>
+                    <button *ngIf="!cargando" type="submit" class="btn btn-lightning rounded-0 mb-2 mr-2">Crear usuario</button>
+                    <button *ngIf="cargando" [disabled]="true" class="btn btn-lightning rounded-0 mb-2 mr-2">
+                        <i class="fa fa-spin fa-sync"></i>
+                        Espere...
+                    </button>
+                    <button type="button" [routerLink]="['/usuarios']" class="btn btn-outline-lightning rounded-0 mb-2">Cancelar</button>
+                </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

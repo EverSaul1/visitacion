@@ -1,0 +1,46 @@
+<div>
+    <h4 class="mb-4 text-muted">Iglesias </h4>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+            <div class="card border-0 rounded-0 h-100">
+                <div class="card-title mb-1 p-3">
+                    <h5>Formulario de Iglesias</h5>
+                </div>
+                <div class="card-body">
+                    <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarIglesia()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nombre de la Iglesia</label>
+                            <input formControlName="name" name="name" class="form-control rounded-0" placeholder="Ejm IASD Villa Union" required>
+                            <div *ngIf="forma.controls['name'].errors?.required" class="form-control-feeback">
+                                El nombre de Igleesia es requerido.
+                            </div>
+                            <div *ngIf="forma.controls['name'].errors?.minlength" class="form-control-feeback">
+                                Por lo menos 5 caracters.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Descripción</label>
+                            <input formControlName="description" name="description" class="form-control rounded-0" placeholder="Ejm jr jae s/n" required>
+                            <div *ngIf="forma.controls['description'].errors?.required" class="form-control-feeback">
+                                La descripcion de Iglesia es requerido.
+                            </div>
+                            <div *ngIf="forma.controls['description'].errors?.minlength" class="form-control-feeback">
+                                Por lo menos 5 caracters.
+                            </div>
+                        </div>
+                        <button *ngIf="!cargando" type="submit" class="btn btn-lightning rounded-0 mb-2 mr-2">Crear Escuela</button>
+                        <button *ngIf="cargando" [disabled]="true" class="btn btn-lightning rounded-0 mb-2 mr-2">
+                            <i class="fa fa-spin fa-sync"></i>
+                            Espere...
+                        </button>
+                        <button type="button" [routerLink]="['/iglesias']" class="btn btn-outline-lightning rounded-0 mb-2">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

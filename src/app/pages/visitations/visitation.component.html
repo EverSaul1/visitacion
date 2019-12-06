@@ -1,0 +1,230 @@
+<div class="row">
+    <div class="col-md-12 mb-4 ">
+
+        <div class="card border-0 rounded-0">
+        <div class="card-title mb-1 p-3">
+            <h5>Registrar visitas</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="forma" (ngSubmit)="registrarVisita()">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Motivo de la visitación</label>
+                        <input formControlName="motivo_visitacion" name="motivo_visitacion" type="text" class="form-control" placeholder="Motivo de la visitación"
+                            [ngClass]="{'is-invalid': !forma.get('motivo_visitacion').valid  && forma.controls['motivo_visitacion'].touched}">
+                        <div *ngIf="forma.controls['motivo_visitacion'].errors?.required && forma.controls['motivo_visitacion'].touched" class="form-control-feedback text-danger" >
+                            Este campo es necesario
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Alumno</label>
+                        <!-- <input  type="text" class="form-control" placeholder="Buscar alumno" formControlName="student" name="student"> -->
+                        <input type="text" name="student" class="form-control" placeholder="Buscar alumno"
+                                formControlName="student" 
+                                [ngbTypeahead]="buscarEstudiante"
+                                [resultFormatter]="formatEstudiante"
+                                [inputFormatter]="formatEstudiante"
+                                [editable]='false'
+                                [ngClass]="{'is-invalid': !forma.get('student').valid  && forma.controls['student'].touched}"/>
+                        <div class="invalid-feedback d-block" *ngIf="noencontradoEstudiante">No se encontraron resultados</div>
+                        <div *ngIf="forma.controls['student'].errors?.required && forma.controls['student'].touched" class="invalid-feedback text-danger d-block" >
+                            Estudiante es requerido
+                        </div>
+                    </div>
+                </div> 
+                <hr>	
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Aspecto académico</label>
+                        <ngb-rating  formControlName="aspec_academico" name="aspec_academico" class="form-control no-border">
+                            <ng-template let-fill="fill" let-index="index">
+                                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4" [class.regular]="index > 6">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Aspecto académico descripción</label>
+                        <input  type="text" class="form-control" placeholder="Descripción" formControlName="desc_academico" name="desc_academico">
+                    </div>
+                </div> 
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Aspecto psicológico emocional</label>
+                        <ngb-rating  formControlName="aspec_emocional" name="aspec_emocional" class="form-control no-border">
+                            <ng-template let-fill="fill" let-index="index">
+                                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4" [class.regular]="index > 6">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Aspecto psicológico emocional</label>
+                        <input  type="text" class="form-control" placeholder="Descripción" formControlName="desc_emocional" name="desc_emocional">
+                    </div>
+                </div> 
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Aspecto de salud</label>
+                        <ngb-rating  formControlName="aspec_salud" name="aspec_salud" class="form-control no-border">
+                            <ng-template let-fill="fill" let-index="index">
+                                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4" [class.regular]="index > 6">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Aspecto de salud descripción</label>
+                        <input  type="text" class="form-control" placeholder="Descripción" formControlName="desc_salud" name="desc_salud">
+                    </div>
+                </div> 
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Aspecto económico</label>
+                        <ngb-rating  formControlName="aspec_economico" name="aspec_economico" class="form-control no-border">
+                            <ng-template let-fill="fill" let-index="index">
+                                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4" [class.regular]="index > 6">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Aspecto económico descripción</label>
+                        <input  type="text" class="form-control" placeholder="Descripción" formControlName="desc_economico" name="desc_economico">
+                    </div>
+                </div> 
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Aspecto espiritual</label>
+                        <ngb-rating  formControlName="aspec_espiritual" name="aspec_espiritual" class="form-control no-border">
+                            <ng-template let-fill="fill" let-index="index">
+                                <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4" [class.regular]="index > 6">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Aspecto espiritual descripción</label>
+                        <input  type="text" class="form-control" placeholder="Descripción" formControlName="desc_espiritual" name="desc_espiritual">
+                    </div>
+                </div> 
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label>Derivar a:</label>
+                        <select formControlName="derivacion" name="derivacion" class="form-control" 
+                                [ngClass]="{'is-invalid': !forma.get('derivacion').valid  && forma.controls['derivacion'].touched}">
+                                <option value="capellania">Capellenía</option>
+                                <option value="psicologia">Psicología</option>
+                                <option value="asistencia_social">Asistencia social</option>
+                                <option value="nutricionista">Nutricionista</option>
+                                <option value="direccion_academica">Dirección académica</option>
+                                <option value="otro_area">Otro área</option>
+                                <option value="no_necesita_derivado">No necesita ser derivado</option>
+                        </select>
+                        <div *ngIf="forma.controls['derivacion'].errors?.required && forma.controls['derivacion'].touched" class="form-control-feedback text-danger" >
+                            Area de derivacion es necesario
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Seleccionar Imagen:</label>
+                            <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" ng2FileSelect [uploader]="uploader" style="display: none;" multiple>
+                                    <label class="custom-file-label roundeed-0" for="customFile">Selecciona Imagen</label>
+                                    <span class="fa fa-folder-open-o" aria-hidden="true"></span>
+                            </div>
+                            <p>Imágenes a subir: {{ uploader?.queue?.length }}</p>
+                            <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="well my-drop-zone" style="text-align: center"><p>Arrastrar imagen aqui...</p>
+                            </div>
+
+                            <table class="table">
+                                    <thead>
+                                    <tr>
+                                      <th scope="col">Nombre</th>
+                                      <th scope="col">Tamaño</th>
+                                      <th scope="col">Progreso</th>
+                                      <th scope="col">Acciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let item of uploader.queue">
+                                      <td>{{ item?.file?.name }}</td>
+                                      <td>{{item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                      <td>
+                                        <div class="progress" style="margin-bottom: 0;">
+                                          <div class="progress-bar progress-bar-striped bg-info"
+                                               [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                      </td>
+                                      <td >
+                                        <button id="botonesTabla" type="button" class="btn btn-secondary"
+                                                (click)="item.upload()"
+                                                [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                          <span class="fa fa-upload"></span> Cargar
+                                        </button>
+                                        <!--<button id="botonesTabla" type="button" class="btn btn-secondary"
+                                                (click)="item.cancel()" [disabled]="!item.isUploading">
+                                          <span class="fa fa-ban"></span> Cancelar
+                                        </button>-->
+                                        <button id="botonesTabla" type="button" class="btn btn-secondary"
+                                                (click)="item.remove()">
+                                          <span class="fa fa-trash"></span> Eliminar
+                                        </button>
+                                      </td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+
+                            <div style="text-align: center">
+                                    <div>
+                                        Cargando Imagen:
+                                        <div class="progress" >
+                                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                [ngStyle]="{ 'width': uploader.progress + '%' }" aria-valuenow="uploader.progress" aria-valuemin="0" aria-valuemax="100">
+                                            {{uploader.progress + '%'}}
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <button type="button" class="btn btn-success btn-s"
+                                            (click)="uploader.uploadAll()"
+                                            [disabled]="!uploader.getNotUploadedItems().length">
+                                        <span class="fa fa-upload"></span> Cargar Todo
+                                    </button>
+                                    <!--<button type="button" class="btn btn-warning btn-s"
+                                            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                        <span class="fa fa-ban"></span> Cancelar todo
+                                    </button>-->
+                                    <button type="button" class="btn btn-danger btn-s"
+                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                        <span class="fa fa-trash"></span> Eliminar Todo
+                                    </button>
+                            </div> 
+                        </div>
+                    </div>
+                <button *ngIf="!cargando" type="submit" class="btn btn-primary" [disabled]="forma.invalid" >Guardar</button>
+                <button *ngIf="cargando" [disabled]="true" class="btn btn-primary">
+                    <i class="fa fa-spin fa-sync"></i>
+                    Espere...
+                </button>
+                <button type="button" [routerLink]="['/visitas']" class="btn btn-light">Cancelar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+

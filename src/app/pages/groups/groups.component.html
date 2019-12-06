@@ -1,0 +1,49 @@
+<div class="card mb-3" style="max-width: 100%;">
+    <div class="card-body">
+        <input #buscarGrupo type="text" class="form-control" placeholder="Buscar Grupos...">
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card border-0 rounded-0">
+            <div class="card-body">
+                <div class="text-right">
+                    <button [routerLink]="['/grupo/nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                  <i class="fa fa-plus"></i>
+                  Crear Grupo
+              </button>
+                </div>
+                <div class="card-title ">
+                    <h5>Lista de Grupos Registrados <span class="badge badge-pill badge-primary">{{collectionSize}}</span></h5>
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table table-hover" id="mytable">
+                        <thead>
+                            <tr>
+                                <th scope="col">N°</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Numero</th>
+                                <th scope="col">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let grupo of grupos; let indice=index">
+                                <th scope="row">{{indice + 1}}</th>
+                                <td>{{grupo.name}}</td>
+                                <td>{{grupo.numero}}</td>
+                                <td>
+                                    <a [routerLink]="['/grupo', grupo._id ]" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Editar">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a (click)="borrarGrupo( grupo )" class="btn btn-sm btn-danger" placement="top" ngbTooltip="Eliminar">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

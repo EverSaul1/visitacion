@@ -1,0 +1,106 @@
+<div>
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="card-body">
+            <input #buscarVisita type="text" class="form-control" placeholder="Buscar visitaciones">
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+                <div class="card-body">
+                    <div class="text-right">
+                        <button (click)="exportAs('xlsx')" type="button" class="btn waves-effect waves-light btn-rounded btn-success mr-md-2">
+                            <i class="fas fa-file-export"></i>
+                            Exportar excel
+                        </button>
+                        <button [routerLink]="['/visita/nuevo']"  type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                            <i class="fa fa-plus"></i>
+                            Nueva visita
+                        </button>
+                    </div>
+                    <div class="card-title">
+                        <h5>Visitas realizadas <small>{{collectionSize}}</small></h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nº</th>
+                                    <th scope="col">Estudiante</th>
+                                    <th scope="col">Dni</th>
+                                    <th scope="col">Fecha visitado</th>
+                                    <th scope="col">Iglesia</th>   
+                                    <th scope="col">Visitador</th>   
+                                    <th scope="col">Asp. académico</th>   
+                                    <th scope="col">Asp. emocional</th>   
+                                    <th scope="col">Asp. salud</th>   
+                                    <th scope="col">Asp. económico</th>   
+                                    <th scope="col">Asp. espiritual</th>   
+                                    <th scope="col">Actions</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let visita of visitas; let indice=index">
+                                    <th scope="row">{{indice + 1}}</th>
+                                    <td>{{visita.student.name}}</td>
+                                    <td>{{visita.student.dni}}</td>
+                                    <td>{{visita.created | date:'medium'}}</td>
+                                    <td>{{visita.student.church}}</td>
+                                    <td>{{visita.user.name}}</td>
+                                    <td>{{visita.aspec_academico}}</td>
+                                    <td>{{visita.aspec_emocional}}</td>
+                                    <td>{{visita.aspec_salud}}</td>
+                                    <td>{{visita.aspec_economico}}</td>
+                                    <td>{{visita.aspec_espiritual}}</td>
+                                    <td>
+                                        <a (click)="openXl(content,visitaDetalle = visita)" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Ver evidencia">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a [routerLink]="['/visita', visita._id ]" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSize" [pageSize]="itemsPerPage" [(page)]="currentPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange(currentPage)">
+                            </ngb-pagination>
+
+                            <select class="custom-select" style="width: auto" [(ngModel)]="itemsPerPage" (click)="loadData()" *ngIf="collectionSize > 4">
+                                <option [ngValue]="5">5</option>
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="25">25</option>
+                                <option [ngValue]="100">100</option>
+                                <option [ngValue]="collectionSize">Todo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Visitado a: <span class="text-uppercase">{{visitaDetalle.student.name}}</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <!-- <p>Nombres Completos: {{visitaDetalle.student.name}}</p> -->
+            <p>Visitado por: <span class="text-uppercase">{{visitaDetalle.user.name}}</span></p>
+            <!-- <img [src]="visitaDetalle.imgs" alt=""> -->
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <ngx-gallery class="border" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Close click')">Cerrar</button>
+        </div>
+    </ng-template>
+      

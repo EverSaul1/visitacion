@@ -1,0 +1,43 @@
+<h4 class="mb-4 text-muted">
+    Grupos </h4>
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 mb-4 align-items-stretch">
+        <div class="card border-0 rounded-0 h-100">
+            <div class="card-title mb-1 p-3">
+                <h5>Formulario de Grupos</h5>
+            </div>
+            <div class="card-body">
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="registrarGrupo()">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nombre</label>
+                        <input formControlName="name" name="name" class="form-control rounded-0" placeholder="Nombre de Grupo" required>
+                        <div *ngIf="forma.controls['name'].errors?.required" class="form-control-feedback text-danger">
+                            <small>El nombre es requerido.</small>
+                        </div>
+                        <div *ngIf="forma.controls['name'].errors?.minlength" class="form-control-feedback text-danger">
+                            <small>Por lo menos 6 caracters.</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Numero</label>
+                        <input formControlName="numero" name="numero" class="form-control rounded-0" placeholder="Numero de Grupo" maxlength="2">
+                        <div *ngIf="forma.controls['numero'].errors?.required" class="form-control-feedback text-danger">
+                            <small>El numero de Grupo es requerido.</small>
+                        </div>
+                        <div *ngIf="forma.controls['numero'].errors?.maxlength" class="form-control-feedback text-danger">
+                            <small>Por lo menos 2 caracters.</small>
+                        </div>
+                    </div>
+                    <button *ngIf="!cargando" type="submit" class="btn btn-lightning rounded-0 mb-2 mr-2">Crear Grupo</button>
+                    <button *ngIf="cargando" [disabled]="true" class="btn btn-lightning rounded-0 mb-2 mr-2">
+                        <i class="fa fa-spin fa-sync"></i>
+                        Espere...
+                    </button>
+                    <button type="button" [routerLink]="['/grupos']" class="btn btn-outline-lightning rounded-0 mb-2">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

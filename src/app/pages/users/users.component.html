@@ -1,0 +1,86 @@
+<div>
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="card-body">
+            <input #buscarUsuario type="text" class="form-control" placeholder="Buscar usuario">
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-0 rounded-0">
+                <div class="card-body">
+                    <div class="text-right">
+                        <button [routerLink]="['/usuario/nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                            <i class="fa fa-plus"></i>
+                            Crear usuario
+                        </button>
+                    </div>
+                    <div class="card-title ">
+                        <h5>Usuarios registrados <small>{{collectionSize}}</small></h5>
+                    </div>
+                    <div class="table-responsive-md">
+                        <table class="table table-hover" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nombres</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Correo Electronico</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let usuario of usuarios; let indice=index">
+                                    <th scope="row">{{indice + 1}}</th>
+                                    <td>{{usuario.name}}</td>
+                                    <td>{{usuario.username}}</td>
+                                    <td>{{usuario.email}}</td>
+                                    <td>
+                                        <select [(ngModel)]="usuario.role" name="role" class="form-control">
+                                            <option value="ADMIN_ROLE">Admin</option>
+                                            <option value="USER_ROLE">Usuario</option>
+                                            <option value="VISITOR_ROLE">Visitador</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <a (click)="guardarUsuario( usuario )" class="btn btn-sm btn-primary mr-2" placement="top" ngbTooltip="Guardar">
+                                            <i class="fas fa-save"></i>
+                                        </a>
+                                        <a (click)="borrarUsuario( usuario )" class="btn btn-sm btn-danger" placement="top" ngbTooltip="Eliminar">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSize" [pageSize]="itemsPerPage" [(page)]="currentPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange(currentPage)">
+                            </ngb-pagination>
+
+                            <select class="custom-select" style="width: auto" [(ngModel)]="itemsPerPage" (click)="loadData()">
+                              <option [ngValue]="5">5</option>
+                              <option [ngValue]="10">10</option>
+                              <option [ngValue]="25">25</option>
+                              <option [ngValue]="100">100</option>
+                              <option [ngValue]="collectionSize">Todo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+<!-- <button (click)="exportAs('pdf', 'portrait')">export as pdf</button>
+<button (click)="exportAs('pdf', 'landscape')">export as pdf landscape</button>
+<button (click)="exportAs('png')">export as png</button>
+<button (click)="exportAs('csv')">export as csv</button>
+<button (click)="exportAs('txt')">export as txt</button>
+<button (click)="exportAs('xlsx')">export as Ms-Excel</button>
+<button (click)="exportAs('docx')">export as MS-Word</button>
+<button (click)="exportAs('json')">export as json</button>
+<button (click)="exportAs('xml')">export as xml</button> -->
