@@ -23,7 +23,7 @@
     "@cloudinary/angular-5.x": "^1.0.3",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "cloudinary-core": "^2.7.4",
     "express": "^4.17.1",
     "ng2-file-upload": "^1.4.0",
